@@ -6,12 +6,22 @@ place_piece(Square, Piece, Board) ->
   T = lists:nthtail(Square, Board),
   H ++ [Piece] ++ T.
 
-find_winner(Board) ->
-  NewBoard = lists:split(3, Board),
-  {H, T} = NewBoard,
-  Pred = lists:nth(1, H),
-  if lists:all(Pred, H) ->
-      lists:nth(1, H)
+winner(Row) -> 
+  Empty = board_open(Row),
+  if 
+    Empty -> false;
+    true -> 
+      [H|T] = Row,
+      winner(H,T)      
+  end.
+
+winner(_,[]) ->
+  true;
+winner(Last, Left) ->
+  [H|T] = Left,
+  if 
+    Last =/= H -> false;
+    true -> winner(H,T)
   end.
 
 get_info_from_io() ->

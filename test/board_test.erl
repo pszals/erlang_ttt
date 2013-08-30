@@ -19,15 +19,20 @@ place_piece_test() ->
         board:place_piece(5,o,[1,2,3,4,5,6,7,8,9]))
     }].
 
-find_winner_test() ->
+winner_test() ->
   [{ "checks for winner on board",
       ?assertEqual(
-        x, board:find_winner([x,x,x,4,5,6,7,8,9]))
+        true, board:winner([x,x,x]))
     },
     
     { "checks for winner on board",
       ?assertEqual(
-        o, board:find_winner([o,o,o,4,5,6,7,8,9]))
+        true, board:winner([o,o,o]))
+    },
+    
+    { "checks for winner on board",
+      ?assertEqual(
+        false, board:winner([o,2,o]))
     }].
 
 talk_to_module_test() ->
