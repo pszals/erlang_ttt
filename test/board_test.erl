@@ -33,6 +33,11 @@ winner_test() ->
     { "checks for winner on board",
       ?assertEqual(
         false, board:winner([o,2,o]))
+    },
+    
+    { "checks for winner on board",
+      ?assertEqual(
+        false, board:winner([x,o,o]))
     }].
 
 talk_to_module_test() ->
