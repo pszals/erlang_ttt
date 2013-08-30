@@ -17,10 +17,10 @@ winner(Row) ->
 
 winner(_,[]) ->
   true;
-winner(Last, Left) ->
-  [H|T] = Left,
+winner(Head, Tail) ->
+  [H|T] = Tail,
   if 
-    Last =/= H -> false;
+    Head =/= H -> false;
     true -> winner(H,T)
   end.
 
