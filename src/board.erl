@@ -10,7 +10,7 @@ winner(Row) ->
   Empty = board_open(Row),
   if 
     Empty -> false;
-    true -> 
+    not Empty  -> 
       [H|T] = Row,
       winner(H,T)      
   end.
@@ -21,7 +21,7 @@ winner(Head, Tail) ->
   [H|T] = Tail,
   if 
     Head =/= H -> false;
-    true -> winner(H,T)
+    Head =:= H -> winner(H,T)
   end.
 
 get_info_from_io() ->
