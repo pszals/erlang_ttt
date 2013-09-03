@@ -22,22 +22,28 @@ place_piece_test() ->
 winner_test() ->
   [{ "checks for winner on board",
       ?assertEqual(
-        true, board:winner([x,x,x]))
+        x, board:winner([1,2,3,x,x,x,7,8,9]))
+      }].
+
+combo_winner_test() ->
+  [{ "checks for combo_winner in a row",
+      ?assertEqual(
+        true, board:combo_winner([x,x,x]))
     },
     
-    { "checks for winner on board",
+   { "checks for combo_winner in a row",
       ?assertEqual(
-        true, board:winner([o,o,o]))
+        true, board:combo_winner([o,o,o]))
     },
     
-    { "checks for winner on board",
+   { "checks for combo_winner in a row",
       ?assertEqual(
-        false, board:winner([o,2,o]))
+        false, board:combo_winner([o,2,o]))
     },
     
-    { "checks for winner on board",
+   { "checks for combo_winner in a row",
       ?assertEqual(
-        false, board:winner([x,o,o]))
+        false, board:combo_winner([x,o,o]))
     }].
 
 talk_to_module_test() ->
@@ -118,6 +124,30 @@ third_column_test() ->
   [{ "returns list of columns from board",
       ?assertEqual(
         [3,6,9], board:third_column([1,2,3,4,5,6,7,8,9]))
+    }].
+
+diagonal_down_test() ->
+  [{ "returns list of diagonal squares from left to right",
+      ?assertEqual(
+        [1,5,9], board:diagonal_down([1,2,3,4,5,6,7,8,9]))
+    }].
+
+diagonal_up_test() ->
+  [{ "returns list of diagonal squares from right to left",
+      ?assertEqual(
+        [7,5,3], board:diagonal_up([1,2,3,4,5,6,7,8,9]))
+    }].
+
+gather_diagonals_test() ->
+  [{ "returns combined list of diagonals",
+      ?assertEqual(
+        [[1,5,9],[7,5,3]], board:gather_diagonals([1,2,3,4,5,6,7,8,9]))
+    }].
+
+gather_combos_test() ->
+  [{ "gathers all 8 combinations",
+      ?assertEqual(
+        [[1,2,3],[4,5,6],[7,8,9],[1,4,7],[2,5,8],[3,6,9],[1,5,9],[7,5,3]], board:gather_combos([1,2,3,4,5,6,7,8,9]))
     }].
 
 check_combos_test() ->

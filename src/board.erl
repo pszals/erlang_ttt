@@ -6,23 +6,27 @@ place_piece(Square, Piece, Board) ->
   T = lists:nthtail(Square, Board),
   H ++ [Piece] ++ T.
 
-winner(Row) -> 
+combo_winner(Row) -> 
   Empty = board_open(Row),
   if 
     Empty      -> false;
     not Empty  -> 
       [H|T] = Row,
-      winner(H,T)      
+      combo_winner(H,T)      
   end.
 
-winner(_,[]) ->
+combo_winner(_,[]) ->
   true;
-winner(Head, Tail) ->
+combo_winner(Head, Tail) ->
   [H|T] = Tail,
   if 
     Head =/= H -> false;
-    Head =:= H -> winner(H,T)
+    Head =:= H -> combo_winner(H,T)
   end.
+
+winner(Board) ->
+  Combos = gather_combos(Board),
+  check_combos(Combos).
 
 get_info_from_io() ->
   console_io:get_x().
@@ -39,12 +43,15 @@ square_open(Square, Board) ->
   is_integer(Value).
 
 game_over(Board) ->
-  Combos = gather_rows(Board),
+  Combos = gather_combos(Board),
   case check_combos(Combos) of
     x -> true;
     o -> true;
     false -> not board_open(Board)
   end.
+
+gather_combos(Board) ->
+  gather_rows(Board) ++ gather_columns(Board) ++ gather_diagonals(Board).
 
 gather_rows(Board) -> lists:reverse(gather_rows(Board,[])).
 
@@ -59,7 +66,7 @@ check_combos(Combos) -> check_combos(Combos, false).
 
 check_combos([], Winner) -> Winner;
 check_combos([H|T], Winner) ->
-  case winner(H) of
+  case combo_winner(H) of
     true  -> check_combos([], lists:nth(1, H));
     false -> check_combos(T, Winner)
   end.
@@ -82,10 +89,14 @@ third_column([], Gathered) -> Gathered;
 third_column(Rest, Gathered) ->
   third_column(lists:nthtail(3,Rest), [lists:nth(3, Rest)|Gathered]).
 
+diagonal_down(Board) -> 
+  [lists:nth(1, Board)] ++ [lists:nth(5, Board)] ++ [lists:nth(9, Board)].
 
+diagonal_up(Board) ->
+  [lists:nth(7, Board)] ++ [lists:nth(5, Board)] ++ [lists:nth(3, Board)].
 
-
-
+gather_diagonals(Board) ->
+  [diagonal_down(Board)] ++ [diagonal_up(Board)].
 
 
 
