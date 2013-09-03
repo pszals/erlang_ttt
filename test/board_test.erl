@@ -96,6 +96,30 @@ gather_rows_test() ->
         [[1,2,3],[4,5,6],[7,8,9]], board:gather_rows([1,2,3,4,5,6,7,8,9]))
     }].
 
+gather_columns_test() ->
+  [{ "returns list of rows from board",
+      ?assertEqual(
+        [[1,4,7],[2,5,8],[3,6,9]], board:gather_columns([1,2,3,4,5,6,7,8,9]))
+    }].
+
+first_column_test() ->
+  [{ "returns list of columns from board",
+      ?assertEqual(
+        [1,4,7], board:first_column([1,2,3,4,5,6,7,8,9]))
+    }].
+
+second_column_test() ->
+  [{ "returns list of columns from board",
+      ?assertEqual(
+        [2,5,8], board:second_column([1,2,3,4,5,6,7,8,9]))
+    }].
+
+third_column_test() ->
+  [{ "returns list of columns from board",
+      ?assertEqual(
+        [3,6,9], board:third_column([1,2,3,4,5,6,7,8,9]))
+    }].
+
 check_combos_test() ->
   [{ "returns winning piece",
       ?assertEqual(
