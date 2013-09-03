@@ -39,8 +39,8 @@ square_open(Square, Board) ->
   is_integer(Value).
 
 game_over(Board) ->
-  ListOfRows = gather_rows(Board),
-  case check_rows(ListOfRows) of
+  Combos = gather_rows(Board),
+  case check_combos(Combos) of
     x -> true;
     o -> true;
     false -> not board_open(Board)
@@ -52,11 +52,11 @@ gather_rows([], Acc) -> Acc;
 gather_rows(Rest, Acc) ->
   gather_rows(lists:nthtail(3,Rest), [lists:sublist(Rest, 3)|Acc]).
   
-check_rows(ListOfRows) -> check_rows(ListOfRows, false).
+check_combos(Combos) -> check_combos(Combos, false).
 
-check_rows([], Acc) -> Acc;
-check_rows([H|T], Acc) ->
+check_combos([], Acc) -> Acc;
+check_combos([H|T], Acc) ->
   case winner(H) of
-    true  -> check_rows([], lists:nth(1, H));
-    false -> check_rows(T, Acc)
+    true  -> check_combos([], lists:nth(1, H));
+    false -> check_combos(T, Acc)
   end.

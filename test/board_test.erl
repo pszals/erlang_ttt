@@ -96,18 +96,18 @@ gather_rows_test() ->
         [[1,2,3],[4,5,6],[7,8,9]], board:gather_rows([1,2,3,4,5,6,7,8,9]))
     }].
 
-check_rows_test() ->
+check_combos_test() ->
   [{ "returns winning piece",
       ?assertEqual(
-        x, board:check_rows([[x,x,x],[4,5,6],[7,8,9]]))
+        x, board:check_combos([[x,x,x],[4,5,6],[7,8,9]]))
     },
 
     { "returns winning piece",
       ?assertEqual(
-        o, board:check_rows([[1,2,3],[o,o,o],[7,8,9]]))
+        o, board:check_combos([[1,2,3],[o,o,o],[7,8,9]]))
     },
     
     { "returns false if no winner is found",
       ?assertEqual(
-        false, board:check_rows([[x,2,x],[4,5,6],[7,8,9]]))
+        false, board:check_combos([[x,2,x],[4,5,6],[7,8,9]]))
     }].
