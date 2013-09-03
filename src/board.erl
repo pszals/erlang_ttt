@@ -9,7 +9,7 @@ place_piece(Square, Piece, Board) ->
 winner(Row) -> 
   Empty = board_open(Row),
   if 
-    Empty -> false;
+    Empty      -> false;
     not Empty  -> 
       [H|T] = Row,
       winner(H,T)      
@@ -37,3 +37,13 @@ board_open(Board) ->
 square_open(Square, Board) ->
   Value = lists:nth(Square, Board),
   is_integer(Value).
+
+game_over(Board) ->
+  not board_open(Board).
+
+gather_rows(Board) -> lists:reverse(gather_rows(Board,[])).
+
+gather_rows([], Acc) -> Acc;
+gather_rows(Rest, Acc) ->
+  gather_rows(lists:nthtail(3,Rest), [lists:sublist(Rest, 3)|Acc]).
+  

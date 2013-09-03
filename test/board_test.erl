@@ -73,3 +73,31 @@ square_open_test() ->
       ?assertEqual(
         false, board:square_open(1, [x,2,3,4,5,6,7,8,9]))
     }].
+
+game_over_test() ->
+  [{ "returns true if tie game",
+      ?assertEqual(
+        true, board:game_over([o,x,o,x,o,x,x,o,x]))
+    },
+    
+    { "returns true if x wins",
+      ?assertEqual(
+        true, board:game_over([x,x,x,4,5,6,7,8,9]))
+    },
+    
+    { "returns false if game still playable",
+      ?assertEqual(
+        false, board:game_over([1,x,o,x,o,x,x,o,x]))
+    }].
+
+gather_rows_test() ->
+  [{ "returns list of rows from board",
+      ?assertEqual(
+        [[1,2,3],[4,5,6],[7,8,9]], board:gather_rows([1,2,3,4,5,6,7,8,9]))
+    }].
+
+check_rows_test() ->
+  [{ "returns winning piece",
+      ?assertEqual(
+        x, board:check_rows([x,x,x,4,5,6,7,8,9]))
+      }].
