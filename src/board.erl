@@ -39,7 +39,12 @@ square_open(Square, Board) ->
   is_integer(Value).
 
 game_over(Board) ->
-  not board_open(Board).
+  ListOfRows = gather_rows(Board),
+  case check_rows(ListOfRows) of
+    x -> true;
+    o -> true;
+    false -> not board_open(Board)
+  end.
 
 gather_rows(Board) -> lists:reverse(gather_rows(Board,[])).
 
@@ -47,3 +52,11 @@ gather_rows([], Acc) -> Acc;
 gather_rows(Rest, Acc) ->
   gather_rows(lists:nthtail(3,Rest), [lists:sublist(Rest, 3)|Acc]).
   
+check_rows(ListOfRows) -> check_rows(ListOfRows, false).
+
+check_rows([], Acc) -> Acc;
+check_rows([H|T], Acc) ->
+  case winner(H) of
+    true  -> check_rows([], lists:nth(1, H));
+    false -> check_rows(T, Acc)
+  end.
