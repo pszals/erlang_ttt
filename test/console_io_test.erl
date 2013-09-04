@@ -5,3 +5,46 @@ output_test() ->
   [{ "outputs message to console",
       ?assertEqual(ok, console_io:output("message"))
   }].
+
+prompt_move_test() ->
+  [{ "prompts for a move",
+      ?assertEqual(ok, console_io:prompt_move())
+  }].
+
+game_over_test() ->
+  [{ "outputs game over message",
+      ?assertEqual(ok, console_io:game_over())
+    }].
+
+invalid_input_test() ->
+  [{ "sends input error message",
+      ?assertEqual(ok, console_io:invalid_input())
+    }].
+
+validate_test() ->
+  [{ "ensures input is in range 1-9",
+      ?assertEqual(
+        true, console_io:validate(1))
+    },
+    
+    { "ensures input is in range 1-9",
+      ?assertEqual(
+        false, console_io:validate(0))
+    },
+    
+    { "ensures correct handling when input is not decimal",
+      ?assertEqual(
+        false, console_io:validate("asdf"))
+    }].
+
+get_input_test() ->
+  [{ "gets input and converts it to decimal",
+      ?assertEqual(
+        {error, request}, console_io:get_input())
+    }].
+
+format_board_test() ->
+  [{ "splits board into three separate rows",
+      ?assertEqual(
+        "123\n456\n789\n", console_io:format_board([1,2,3,4,5,6,7,8,9]))
+    }].
