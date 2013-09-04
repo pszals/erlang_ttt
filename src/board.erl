@@ -6,6 +6,11 @@ place_piece(Square, Piece, Board) ->
   T = lists:nthtail(Square, Board),
   H ++ [Piece] ++ T.
 
+undo_place_piece(Square, Board) ->
+  H = lists:sublist(Board, Square -1),
+  T = lists:nthtail(Square, Board),
+  H ++ [Square] ++ T.
+
 combo_winner(Row) -> 
   Empty = board_open(Row),
   if 
@@ -27,9 +32,6 @@ combo_winner(Head, Tail) ->
 winner(Board) ->
   Combos = gather_combos(Board),
   check_combos(Combos).
-
-get_info_from_io() ->
-  console_io:get_x().
 
 open_squares(Board) ->
   Board -- [x,x,x,x,x,o,o,o,o,o].
@@ -98,7 +100,8 @@ diagonal_up(Board) ->
 gather_diagonals(Board) ->
   [diagonal_down(Board)] ++ [diagonal_up(Board)].
 
-
-
-
-
+%%diagonal(Board) -> lists:flatten(lists:reverse(diagonal(Board,[]))).
+%%
+%%diagonal([], Gathered) -> Gathered;
+%%diagonal(Rest, Gathered) ->
+%%  diagonal(lists:nthtail(4,Rest), [lists:nth(1, Rest)|Gathered]).

@@ -19,6 +19,13 @@ place_piece_test() ->
         board:place_piece(5,o,[1,2,3,4,5,6,7,8,9]))
     }].
 
+undo_place_piece_test() ->
+  [{ "removes a piece placed on board",
+      ?assertEqual(
+        [1,2,3,4,5,6,7,8,9],
+        board:undo_place_piece(1, [x,2,3,4,5,6,7,8,9]))
+    }].
+
 winner_test() ->
   [{ "checks for winner on board",
       ?assertEqual(
@@ -44,12 +51,6 @@ combo_winner_test() ->
    { "checks for combo_winner in a row",
       ?assertEqual(
         false, board:combo_winner([x,o,o]))
-    }].
-
-talk_to_module_test() ->
-  [{ "talks to console_io module",
-      ?assertEqual(
-        x, board:get_info_from_io())
     }].
 
 open_squares_test() ->
@@ -165,3 +166,9 @@ check_combos_test() ->
       ?assertEqual(
         false, board:check_combos([[x,2,x],[4,5,6],[7,8,9]]))
     }].
+
+%%diagonal_test() ->
+%%  [{ "returns list of diagonal from top left to bottom right",
+%%      ?assertEqual(
+%%        [1,5,9], board:diagonal([1,2,3,4,5,6,7,8,9]))
+%%      }].
