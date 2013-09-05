@@ -14,10 +14,13 @@ invalid_input() ->
   output("\nInput was invalid.").
 
 validate(Input) ->
-  Input > 0 andalso Input < 10.
+  Input > 0 andalso Input < 10. % andalso is_integer(Input).
 
 get_input() ->
-  Input = io:fread(" ", "~d"),
+  Input = io:fread("", "~d"),
+  Input.
+
+format_input(Input) ->
   {_,Selection} = Input,
   Formatted = lists:nth(1, Selection),
   Formatted.

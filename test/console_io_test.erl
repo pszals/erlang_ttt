@@ -43,6 +43,12 @@ get_input_test() ->
         {error, request}, console_io:get_input())
     }].
 
+format_input_test() ->
+  [{ "formats input from io:fread",
+      ?assertEqual(
+        1, console_io:format_input({ok, [1]}))
+    }].
+
 format_board_test() ->
   [{ "splits board into three separate rows",
       ?assertEqual(

@@ -13,7 +13,7 @@ game_loop(GameOver, Board, Piece) ->
 take_turn(Board, Piece) ->
   console_io:output(console_io:format_board(Board)),
   console_io:prompt_move(),
-  Move = console_io:get_input(),
+  Move = console_io:format_input(console_io:get_input()),
   case console_io:validate(Move) andalso board:square_open(Move, Board) of 
       false -> 
         console_io:invalid_input(),
@@ -31,3 +31,6 @@ switch_piece(Piece) ->
     Piece =:= x -> o;
     Piece =/= x -> x
   end.
+
+play_game() ->
+  game_loop(false, [1,2,3,4,5,6,7,8,9], x).
