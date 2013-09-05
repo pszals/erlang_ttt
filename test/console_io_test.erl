@@ -46,5 +46,5 @@ get_input_test() ->
 format_board_test() ->
   [{ "splits board into three separate rows",
       ?assertEqual(
-        "123\n456\n789\n", console_io:format_board([1,2,3,4,5,6,7,8,9]))
+        "\n123\n456\n789", console_io:format_board([1,2,3,4,5,6,7,8,9]))
     }].
