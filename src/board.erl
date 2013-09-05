@@ -7,7 +7,7 @@ place_piece(Square, Piece, Board) ->
   H ++ [Piece] ++ T.
 
 undo_place_piece(Square, Board) ->
-  H = lists:sublist(Board, Square -1),
+  H = lists:sublist(Board, Square - 1),
   T = lists:nthtail(Square, Board),
   H ++ [Square] ++ T.
 
@@ -47,9 +47,13 @@ square_open(Square, Board) ->
 game_over(Board) ->
   Combos = gather_combos(Board),
   case check_combos(Combos) of
-    x -> true;
-    o -> true;
-    false -> not board_open(Board)
+    x -> game_over;
+    o -> game_over;
+    false -> 
+      case board_open(Board) of
+        false -> game_over;
+        true  -> false
+      end
   end.
 
 gather_combos(Board) ->

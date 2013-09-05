@@ -84,12 +84,12 @@ square_open_test() ->
 game_over_test() ->
   [{ "returns true if tie game",
       ?assertEqual(
-        true, board:game_over([o,x,o,x,o,x,x,o,x]))
+        game_over, board:game_over([o,x,o,x,o,x,x,o,x]))
     },
     
     { "returns true if x wins",
       ?assertEqual(
-        true, board:game_over([x,x,x,4,5,6,7,8,9]))
+        game_over, board:game_over([x,x,x,4,5,6,7,8,9]))
     },
     
     { "returns false if game still playable",

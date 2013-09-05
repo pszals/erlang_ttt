@@ -25,5 +25,3 @@ format_board(Board) -> lists:concat(lists:concat(lists:reverse((format_board(Boa
 format_board([], Board) -> Board;
 format_board(Rest, Formatted) ->
   format_board(lists:nthtail(3,Rest), [lists:sublist(Rest,3) ++ ["\n"]|Formatted]).
-
-
