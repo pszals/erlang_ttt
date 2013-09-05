@@ -5,20 +5,22 @@ output(Message) ->
   io:format("~s", [Message]).
 
 prompt_move() ->
-  output("Enter a move: ").
+  output("\nEnter a move: ").
 
 game_over() ->
-  output("Game Over").
+  output("\nGame Over\n").
 
 invalid_input() ->
-  output("Input was invalid.").
+  output("\nInput was invalid.").
 
 validate(Input) ->
   Input > 0 andalso Input < 10.
 
 get_input() ->
   Input = io:fread(" ", "~d"),
-  Input.
+  {_,Selection} = Input,
+  Formatted = lists:nth(1, Selection),
+  Formatted.
 
 format_board(Board) -> lists:concat(lists:concat(lists:reverse((format_board(Board, []))))).
 
