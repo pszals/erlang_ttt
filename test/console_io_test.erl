@@ -37,16 +37,10 @@ validate_test() ->
         false, console_io:validate("asdf"))
     }].
 
-get_input_test() ->
-  [{ "gets input and converts it to decimal",
-      ?assertEqual(
-        {error, request}, console_io:get_input())
-    }].
-
 format_input_test() ->
   [{ "formats input from io:fread",
       ?assertEqual(
-        1, console_io:format_input({ok, [1]}))
+        1, console_io:format_input("1\n"))
     }].
 
 format_board_test() ->

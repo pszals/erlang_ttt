@@ -11,19 +11,24 @@ game_over() ->
   output("\nGame Over\n").
 
 invalid_input() ->
-  output("\nInput was invalid.").
+  output("\nInput was invalid. Enter a single-digit number.").
 
 validate(Input) ->
-  Input > 0 andalso Input < 10. % andalso is_integer(Input).
+  Input > 0 andalso Input < 10. 
 
 get_input() ->
-  Input = io:fread("", "~d"),
-  Input.
+  io:get_line(" ").
 
 format_input(Input) ->
-  {_,Selection} = Input,
-  Formatted = lists:nth(1, Selection),
-  Formatted.
+  Tuple = string:to_integer(Input),
+  {NewInput, _} = Tuple,
+  case NewInput of
+    error ->
+      invalid_input(),
+      get_input();
+    _ ->
+      NewInput 
+  end.
 
 format_board(Board) -> lists:concat(lists:concat(lists:reverse((format_board(Board, []))))).
 
