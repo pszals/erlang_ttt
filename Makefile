@@ -1,8 +1,7 @@
-all:		compile run_test
+all:		compile run_test clean
 
 
 compile:
-				mkdir -p ebin
 				erlc -o ebin/ src/*.erl
 				erlc -o ebin/ test/*.erl
 
