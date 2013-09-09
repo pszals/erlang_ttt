@@ -37,3 +37,14 @@ o_wins_test() ->
   ?assertEqual(ok, new_console_io:o_wins()),
   cleanup().
 
+format_board_test() ->
+  [{ "formats board to a string",
+      ?assertEqual(
+        "\n123\n456\n789", new_console_io:format_board([1,2,3,4,5,6,7,8,9]))
+    }].
+
+format_input_test() ->
+  [{ "formats input from io:get_line",
+      ?assertEqual(
+        1, new_console_io:format_input("1"))
+    }].
