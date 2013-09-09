@@ -23,6 +23,8 @@ game_over(Board) ->
     false -> not board_open(Board)
   end.
 
+
+
 %%%%%%%%%%%% PRIVATE %%%%%%%%%%%%%%%%%%%
 
 board_open(Board) ->
@@ -34,7 +36,7 @@ winner(Board) ->
   check_combos(Combos).
 
 gather_combos(Board) ->
-  gather_rows(Board) ++ gather_columns(Board) ++ gather_diagonals(Board).
+  gather_rows(Board) ++ columns(Board) ++ gather_diagonals(Board).
 
 combo_winner(_,[]) -> true;
 combo_winner(Head, Tail) ->
@@ -63,27 +65,17 @@ gather_rows([], Gathered) -> Gathered;
 gather_rows(Rest, Gathered) ->
   gather_rows(lists:nthtail(3, Rest), [lists:sublist(Rest, 3)|Gathered]).
 
-column_one([], Gathered) -> Gathered;
-column_one(Rest, Gathered) ->
-  column_one(lists:nthtail(3,Rest), [lists:nth(1,Rest)|Gathered]).
+columns(_, Gathered, 4) -> Gathered;
+columns(Board, Gathered, Acc) ->
+  Rows = gather_rows(Board),
+  Column = lists:map(column_fun(Acc), Rows), 
+  GatheredRows = Gathered ++ [Column],
+  columns(Board, GatheredRows, Acc + 1).
 
-column_one(Board) -> lists:flatten(lists:reverse(column_one(Board, []))).
+columns(Board) -> columns(Board, [], 1).
 
-column_two([], Gathered) -> Gathered;
-column_two(Rest, Gathered) ->
-  column_two(lists:nthtail(3, Rest), [lists:nth(2, Rest)|Gathered]).
-
-column_two(Board) -> lists:flatten(lists:reverse(column_two(Board, []))).
-
-column_three([], Gathered) -> Gathered;
-column_three(Rest, Gathered) ->
-  column_three(lists:nthtail(3, Rest), [lists:nth(3, Rest)|Gathered]).
-
-column_three(Board) -> lists:flatten(lists:reverse(column_three(Board, []))).
-
-gather_columns(Board) ->
-  [column_one(Board)] ++ [column_two(Board)] ++ [column_three(Board)].
-
+column_fun(ColumnNumber) ->
+  fun(BoardRow) -> lists:nth(ColumnNumber, BoardRow) end.
 diagonal_one(Board) ->
   [lists:nth(1, Board)] ++ [lists:nth(5, Board)] ++ [lists:nth(9, Board)].
 

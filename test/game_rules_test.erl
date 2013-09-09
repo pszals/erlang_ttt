@@ -81,31 +81,13 @@ gather_combos_test() ->
 
     { "gathers column combinations",
       ?assertEqual(
-        [[1,4,7], [2,5,8], [3,6,9]], game_rules:gather_columns([1,2,3,4,5,6,7,8,9]))
+        [[1,4,7], [2,5,8], [3,6,9]], game_rules:columns([1,2,3,4,5,6,7,8,9]))
     },
   
     { "gathers diagonal combinations",
     ?assertEqual(
       [[1,5,9],[3,5,7]], game_rules:gather_diagonals([1,2,3,4,5,6,7,8,9]))
   }].
-
-column_one_test() ->
-  [{ "returns first column",
-      ?assertEqual(
-        [1,4,7], game_rules:column_one([1,2,3,4,5,6,7,8,9]))
-    }].
-
-column_two_test() ->
-  [{ "returns second column",
-      ?assertEqual(
-        [2,5,8], game_rules:column_two([1,2,3,4,5,6,7,8,9]))
-    }].
-
-column_three_test() ->
-  [{ "returns second column",
-      ?assertEqual(
-        [3,6,9], game_rules:column_three([1,2,3,4,5,6,7,8,9]))
-    }].
 
 diagonal_one_test() ->
   [{ "returns first diagonal",
