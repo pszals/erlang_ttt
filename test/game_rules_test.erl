@@ -1,6 +1,16 @@
 -module(game_rules_test).
 -include_lib("eunit/include/eunit.hrl").
 
+get_turn_test() ->
+  [{ "determines whether player 1 or player 2 is to play",
+      ?assertEqual(
+        1, game_rules:get_turn([1,2,3,4,5,6,7,8,9]))
+    },
+    {"determines that it's player 2's turn",
+      ?assertEqual(
+        2, game_rules:get_turn([1,2,3,4,5,6,7,8,x]))
+    }].
+
 store_move_test() ->
   [{ "stores a piece on the board",
       ?assertEqual(
@@ -13,6 +23,12 @@ undo_store_move_test() ->
       ?assertEqual(
         [1,2,3],
         game_rules:undo_store_move(1, ["piece", 2, 3]))
+    }].
+
+open_squares_test() ->
+  [{ "returns list of open squares",
+      ?assertEqual(
+        [1,2,3], game_rules:open_squares([1,2,3,x]))
     }].
 
 square_open_test() ->

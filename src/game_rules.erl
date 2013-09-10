@@ -1,6 +1,13 @@
 -module(game_rules). 
 -compile(export_all).
 
+get_turn(Board) ->
+  OpenSquares = open_squares(Board),
+  if
+    length(OpenSquares) rem 2 =:= 1 -> 1;
+    length(OpenSquares) rem 2 =/= 1 -> 2
+  end.
+
 store_move(Location, Piece, Board) ->
   H = lists:sublist(Board, Location - 1),
   T = lists:nthtail(Location, Board),
@@ -10,6 +17,10 @@ undo_store_move(Location, Board) ->
   H = lists:sublist(Board, Location - 1),
   T = lists:nthtail(Location, Board),
   H ++ [Location] ++ T.
+
+open_squares(Board) ->
+  Pred = fun(X) -> is_integer(X) end,
+  lists:takewhile(Pred, Board).
 
 square_open(Location, Board) ->
   Value = lists:nth(Location, Board),
