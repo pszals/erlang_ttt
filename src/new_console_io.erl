@@ -22,6 +22,9 @@ configure_game() ->
 input() ->
   io:get_line(" ").
 
+validate(Input) ->
+  Input > 0 andalso Input < 10. 
+
 invalid_input() ->
   display("\nInput was invalid. Enter a single-digit number.").
 
