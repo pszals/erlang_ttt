@@ -16,6 +16,9 @@ x_wins() ->
 o_wins() ->
   display("\nPlayer O wins!\n").
 
+configure_game() ->
+  display("\nEnter 1 for H v. H, 2 for H v. C, or 3 for C v. C\n").
+
 input() ->
   io:get_line(" ").
 
