@@ -1,4 +1,4 @@
--module(game_rules).
+-module(game_rules). 
 -compile(export_all).
 
 store_move(Location, Piece, Board) ->
@@ -22,8 +22,6 @@ game_over(Board) ->
     o -> true;
     false -> not board_open(Board)
   end.
-
-%%%%%%%%%%%% PRIVATE %%%%%%%%%%%%%%%%%%%
 
 board_open(Board) ->
   Pred = fun(X) -> is_integer(X) end,
@@ -75,11 +73,20 @@ gather_columns(Board) -> gather_columns(Board, [], 1).
 column_fun(ColumnNumber) ->
   fun(BoardRow) -> lists:nth(ColumnNumber, BoardRow) end.
 
-diagonal_one(Board) ->
-  [lists:nth(1, Board)] ++ [lists:nth(5, Board)] ++ [lists:nth(9, Board)].
+diagonal_one(Board) -> diagonal(gather_rows(Board), 1, []).
 
-diagonal_two(Board) ->
-  [lists:nth(3, Board)] ++ [lists:nth(5, Board)] ++ [lists:nth(7, Board)].
+diagonal_two(Board) -> 
+  Rows = gather_rows(Board),
+  Reversed = lists:reverse(Rows),
+  diagonal(Reversed, 1, []).
+
+diagonal([], _, Gathered) -> Gathered;
+diagonal(Board, N, Gathered) ->
+  [CurrentRow|Rest] = Board,
+  NewGathered = lists:merge(Gathered, [lists:nth(N, CurrentRow)]),
+  diagonal(Rest, N + 1, NewGathered).
+diagonal(Board) -> diagonal(Board, 1, []).
 
 gather_diagonals(Board) ->
-  [diagonal_one(Board)] ++ [diagonal_two(Board)].
+  lists:merge([diagonal_one(Board)], [diagonal_two(Board)]).
+
