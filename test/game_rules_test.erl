@@ -73,6 +73,11 @@ winner_test() ->
   [{ "returns winning marker type or false if no winner",
       ?assertEqual(
         x, game_rules:winner([x,x,x,4,5,6,7,8,9]))
+    },
+    
+   { "returns false if no winner",
+      ?assertEqual(
+        false, game_rules:winner([x,o,x,x,o,x,o,x,o]))
     }].
 
 combo_winner_test() ->
