@@ -10,7 +10,5 @@ take_turn(Board, Piece) ->
       take_turn(Board, Piece)
   end.
 
-
-
 validate(Move, Board) ->
   board:square_open(Move, Board) andalso console_io:validate(Move).

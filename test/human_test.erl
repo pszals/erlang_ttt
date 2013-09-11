@@ -15,4 +15,15 @@ take_turn_test() ->
       ?assertEqual(
         [x], human:take_turn([1], x)),
       cleanup()
+    },
+    
+    { "validates a wrong move and then takes a turn",
+      setup(),
+      meck:expect(new_console_io, input, fun() -> "4" end),
+      meck:expect(new_console_io, format_input, fun("4") -> 4 end),
+      meck:expect(new_console_io, input, fun() -> "1" end),
+      meck:expect(new_console_io, format_input, fun("1") -> 1 end),
+      ?assertEqual(
+        [o,2,3,x], human:take_turn([1,2,3,x], o)),
+      cleanup()
     }].
