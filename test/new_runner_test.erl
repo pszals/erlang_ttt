@@ -32,3 +32,14 @@ take_turn_test() ->
       meck:unload(computer)
     }].
 
+game_loop_test() ->
+  [{ "decides when game is over",
+      meck:new(new_console_io),
+      meck:expect(new_console_io, game_over, fun() -> "Game Over" end),
+      meck:expect(new_console_io, display, fun(_) -> "Message 2" end),
+      meck:expect(new_console_io, format_board, fun(_) -> "Formatted" end),
+      meck:expect(new_console_io, display, fun(_) -> "Message 3" end),
+      ?assertEqual(
+        "Game Over", new_runner:game_loop(true, [x], o)),
+      meck:unload(new_console_io)
+    }].

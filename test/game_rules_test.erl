@@ -6,9 +6,15 @@ get_turn_test() ->
       ?assertEqual(
         1, game_rules:get_turn([1,2,3,4,5,6,7,8,9]))
     },
+    
     {"determines that it's player 2's turn",
       ?assertEqual(
         2, game_rules:get_turn([1,2,3,4,5,6,7,8,x]))
+    },
+    
+    {"determines that it's player 1's turn",
+      ?assertEqual(
+        1, game_rules:get_turn([1,2,3,4,5,6,7,o,x]))
     }].
 
 store_move_test() ->
@@ -29,6 +35,11 @@ open_squares_test() ->
   [{ "returns list of open squares",
       ?assertEqual(
         [1,2,3], game_rules:open_squares([1,2,3,x]))
+    },
+    
+    { "returns list of open squares",
+      ?assertEqual(
+        [2,3,4], game_rules:open_squares([x,2,3,4]))
     }].
 
 square_open_test() ->

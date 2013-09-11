@@ -64,3 +64,14 @@ validate_test() ->
       ?assertEqual(
         false, new_console_io:validate("asdf"))
     }].
+
+validate_raw_test() ->
+  [{ "ensures input is only one character in length",
+      ?assertEqual(
+        true, new_console_io:validate_raw("1\n"))
+    },
+  
+    { "returns false if input is not one character in length",
+      ?assertEqual(
+        false, new_console_io:validate_raw("12\n"))
+    }].

@@ -4,6 +4,10 @@
 display(Message) ->
   io:fwrite(Message).
 
+display_board(Board) ->
+  FormattedBoard = format_board(Board),
+  display(FormattedBoard).
+
 prompt_move() ->
   display("\nEnter a move: ").
 
@@ -40,7 +44,13 @@ format_input(Input) ->
   case NewInput of
     error ->
       invalid_input(),
-      input();
+      format_input(input());
     _ ->
       NewInput 
+  end.
+
+validate_raw(Input) ->
+  if
+    length(Input) =:= 2 -> true;
+    length(Input) =/= 2 -> false
   end.

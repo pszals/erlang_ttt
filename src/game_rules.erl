@@ -3,6 +3,7 @@
 
 get_turn(Board) ->
   OpenSquares = open_squares(Board),
+  io:fwrite("called in get_turn"),
   if
     length(OpenSquares) rem 2 =:= 1 -> 1;
     length(OpenSquares) rem 2 =/= 1 -> 2
@@ -20,7 +21,7 @@ undo_store_move(Location, Board) ->
 
 open_squares(Board) ->
   Pred = fun(X) -> is_integer(X) end,
-  lists:takewhile(Pred, Board).
+  lists:filter(Pred, Board).
 
 square_open(Location, Board) ->
   Value = lists:nth(Location, Board),
