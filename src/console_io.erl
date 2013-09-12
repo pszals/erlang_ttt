@@ -46,7 +46,15 @@ format_input(Input) ->
       invalid_input(),
       format_input(input());
     _ ->
-      NewInput 
+      validate_move(NewInput) 
+  end.
+
+validate_move(Move) ->
+  case validate(Move) of
+    true  -> Move;
+    false -> 
+      invalid_input(),
+      format_input(input())
   end.
 
 validate_raw(Input) ->
