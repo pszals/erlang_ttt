@@ -10,9 +10,9 @@ configure_players(Selection) ->
   end.
 
 configure_game() -> 
-  new_console_io:configure_game(),
-  Input = new_console_io:input(),
-  FormattedInput = new_console_io:format_input(Input),
+  console_io:configure_game(),
+  Input = console_io:input(),
+  FormattedInput = console_io:format_input(Input),
   Output = configure_players(FormattedInput),
   case Output of
     [{_,_},{_,_}] = Output -> Output;

@@ -2,7 +2,8 @@
 -compile(export_all).
 
 take_turn(Board, Piece) ->
-  lists:max.
+  lalala.
+%  lists:max.
 
 score_board(Board, Piece) ->
   Winner = game_rules:winner(Board),
@@ -28,9 +29,10 @@ minimax(Board, Piece) ->
   % Map minimax over these open squares
   % lists:map(next_level_score(Board, Piece, Depth, OpenSquares, Score), OpenSquares)
   % Returning [{1, 10}, {space, score}] return best scored space
-  minimax(Board, Space, Piece, 1, OpenSquares, 0). 
+ % pass in space here 
+  minimax(Board, Piece, 1, OpenSquares, 0). 
 
-minimax(Board, Depth, OpenSquares, Score) ->
+minimax(Board, Piece, Depth, OpenSquares, Score) ->
   GameStatus = game_rules:game_over(Board),
   BestScore = -1000000,
   case GameStatus of

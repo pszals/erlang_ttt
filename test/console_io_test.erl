@@ -1,24 +1,52 @@
 -module(console_io_test).
 -include_lib("eunit/include/eunit.hrl").
 
-output_test() ->
-  [{ "outputs message to console",
-      ?assertEqual(ok, console_io:output("message"))
-  }].
+setup() ->
+  meck:new(io, [unstick, passthrough]).
+
+cleanup() ->
+  meck:unload(io).
+
+display_test() ->
+  setup(),
+  meck:expect(io, fwrite, fun(_) -> ok end),
+  ?assertEqual(ok, console_io:display("Message")),
+  cleanup().
 
 prompt_move_test() ->
-  [{ "prompts for a move",
-      ?assertEqual(ok, console_io:prompt_move())
-  }].
+  setup(),
+  meck:expect(io, fwrite, fun(_) -> ok end),
+  ?assertEqual(ok, console_io:prompt_move()),
+  cleanup().
 
 game_over_test() ->
-  [{ "outputs game over message",
-      ?assertEqual(ok, console_io:game_over())
+  setup(),
+  meck:expect(io, fwrite, fun(_) -> ok end),
+  ?assertEqual(ok, console_io:game_over()),
+  cleanup().
+
+x_wins_test() ->
+  setup(),
+  meck:expect(io, fwrite, fun(_) -> ok end),
+  ?assertEqual(ok, console_io:x_wins()),
+  cleanup().
+
+o_wins_test() ->
+  setup(),
+  meck:expect(io, fwrite, fun(_) -> ok end),
+  ?assertEqual(ok, console_io:o_wins()),
+  cleanup().
+
+format_board_test() ->
+  [{ "formats board to a string",
+      ?assertEqual(
+        "\n123\n456\n789", console_io:format_board([1,2,3,4,5,6,7,8,9]))
     }].
 
-invalid_input_test() ->
-  [{ "sends input error message",
-      ?assertEqual(ok, console_io:invalid_input())
+format_input_test() ->
+  [{ "formats input from io:get_line",
+      ?assertEqual(
+        1, console_io:format_input("1"))
     }].
 
 validate_test() ->
@@ -37,14 +65,13 @@ validate_test() ->
         false, console_io:validate("asdf"))
     }].
 
-format_input_test() ->
-  [{ "formats input from io:fread",
+validate_raw_test() ->
+  [{ "ensures input is only one character in length",
       ?assertEqual(
-        1, console_io:format_input("1\n"))
-    }].
-
-format_board_test() ->
-  [{ "splits board into three separate rows",
+        true, console_io:validate_raw("1\n"))
+    },
+  
+    { "returns false if input is not one character in length",
       ?assertEqual(
-        "\n123\n456\n789", console_io:format_board([1,2,3,4,5,6,7,8,9]))
+        false, console_io:validate_raw("12\n"))
     }].

@@ -19,24 +19,24 @@ configure_players_test() ->
 
 configure_game_test() ->
   [{ "uses input to configure players",
-      meck:new(new_console_io),
-      meck:expect(new_console_io, configure_game, fun() -> "hello" end),
-      meck:expect(new_console_io, input, fun() -> "1" end),
-      meck:expect(new_console_io, format_input, fun(Input) -> 1 end),
+      meck:new(console_io),
+      meck:expect(console_io, configure_game, fun() -> "hello" end),
+      meck:expect(console_io, input, fun() -> "1" end),
+      meck:expect(console_io, format_input, fun(Input) -> 1 end),
       ?assertEqual(
         [{human, x}, {human, o}], configuration:configure_game()),
-      meck:unload(new_console_io)
+      meck:unload(console_io)
     },
     
     { "uses input to configure players, will re-prompt if input is invalid",
-      meck:new(new_console_io),
-      meck:expect(new_console_io, configure_game, fun() -> "hello" end),
-      meck:expect(new_console_io, input, fun() -> "9" end),
-      meck:expect(new_console_io, format_input, fun(Input) -> 9 end),
-      meck:expect(new_console_io, configure_game, fun() -> "hello" end),
-      meck:expect(new_console_io, input, fun() -> "1" end),
-      meck:expect(new_console_io, format_input, fun(Input) -> 1 end),
+      meck:new(console_io),
+      meck:expect(console_io, configure_game, fun() -> "hello" end),
+      meck:expect(console_io, input, fun() -> "9" end),
+      meck:expect(console_io, format_input, fun(Input) -> 9 end),
+      meck:expect(console_io, configure_game, fun() -> "hello" end),
+      meck:expect(console_io, input, fun() -> "1" end),
+      meck:expect(console_io, format_input, fun(Input) -> 1 end),
       ?assertEqual(
         [{human, x}, {human, o}], configuration:configure_game()),
-      meck:unload(new_console_io)
+      meck:unload(console_io)
     }].

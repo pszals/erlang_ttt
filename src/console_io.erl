@@ -1,23 +1,42 @@
 -module(console_io).
 -compile(export_all).
 
-output(Message) ->
-  io:format("~s", [Message]).
+display(Message) ->
+  io:fwrite(Message).
+
+display_board(Board) ->
+  FormattedBoard = format_board(Board),
+  display(FormattedBoard).
 
 prompt_move() ->
-  output("\nEnter a move: ").
+  display("\nEnter a move: ").
 
 game_over() ->
-  output("\nGame Over\n").
+  display("\nGame Over\n").
 
-invalid_input() ->
-  output("\nInput was invalid. Enter a single-digit number.").
+x_wins() ->
+  display("\nPlayer X wins!\n").
+
+o_wins() ->
+  display("\nPlayer O wins!\n").
+
+configure_game() ->
+  display("\nEnter 1 for H v. H, 2 for H v. C, or 3 for C v. C\n").
+
+input() ->
+  io:get_line(" ").
 
 validate(Input) ->
   Input > 0 andalso Input < 10. 
 
-get_input() ->
-  io:get_line(" ").
+invalid_input() ->
+  display("\nInput was invalid. Enter a single-digit number.").
+
+format_board(Board) -> lists:concat(lists:concat(lists:reverse((format_board(Board, []))))).
+
+format_board([], Board) -> Board;
+format_board(Rest, Formatted) ->
+  format_board(lists:nthtail(3,Rest), [["\n"] ++ lists:sublist(Rest,3)|Formatted]).
 
 format_input(Input) ->
   Tuple = string:to_integer(Input),
@@ -25,13 +44,13 @@ format_input(Input) ->
   case NewInput of
     error ->
       invalid_input(),
-      get_input();
+      format_input(input());
     _ ->
       NewInput 
   end.
 
-format_board(Board) -> lists:concat(lists:concat(lists:reverse((format_board(Board, []))))).
-
-format_board([], Board) -> Board;
-format_board(Rest, Formatted) ->
-  format_board(lists:nthtail(3,Rest), [["\n"] ++ lists:sublist(Rest,3)|Formatted]).
+validate_raw(Input) ->
+  if
+    length(Input) =:= 2 -> true;
+    length(Input) =/= 2 -> false
+  end.
