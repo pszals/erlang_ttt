@@ -20,15 +20,26 @@ score_board_test() ->
 minimax_test() ->
     [{ "provides a 1 for win, -1 for loss, and 0 for tie",
         ?assertEqual(
-          1.0, computer:minimax([x,x,x,4,5,6,7,8,9], x, 1))
+          1.0, computer:minimax([x,x,x,4,5,6,7,8,9], x))
       },
       
       { "provides a 1 for win, -1 for loss, and 0 for tie",
         ?assertEqual(
-          -1.0, computer:minimax([x,x,x,4,5,6,7,8,9], o, 1))
+          -1.0, computer:minimax([x,x,x,4,5,6,7,8,9], o))
       },
       
       { "provides a 1 for win, -1 for loss, and 0 for tie",
         ?assertEqual(
-          0.0, computer:minimax([x,o,x,x,o,x,o,x,o], o, 1))
+          0.0, computer:minimax([x,o,x,x,o,x,o,x,o], o))
       }].
+
+switch_piece_test() ->
+  [{ "switches piece",
+      ?assertEqual(
+        o, computer:switch_piece(x))
+    },
+    
+    { "switches piece",
+      ?assertEqual(
+        x, computer:switch_piece(o))
+    }].

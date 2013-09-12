@@ -10,7 +10,6 @@ player_type(PlayerTuple) ->
 
 take_turn(Board, Players) ->
   Turn = game_rules:get_turn(Board),
-  io:put_chars(integer_to_list(Turn)),
   PlayerTuple = get_player(Players, Turn),
   case PlayerTuple of
     {human, Piece} = PlayerTuple -> human:take_turn(Board, Piece);
