@@ -1,12 +1,17 @@
 -module(runner).
 -compile(export_all).
 
-get_player(Players, Turn) ->
-  lists:nth(Turn, Players).
+play_game() ->
+  Players = configuration:configure_game(),
+  game_loop(false, board:make_board(9), Players).
 
-player_type(PlayerTuple) ->
-  {Type,_} = PlayerTuple,
-  Type.
+game_loop(GameOver, Board, Players) ->
+  case GameOver of
+    true ->
+      game_over(Board);
+    false ->
+      next_move(Board, Players)
+  end.
 
 take_turn(Board, Players) ->
   Turn = game_rules:get_turn(Board),
@@ -16,22 +21,6 @@ take_turn(Board, Players) ->
     {computer, Piece} = PlayerTuple -> computer:take_turn(Board, Piece)
   end.
 
-game_loop(GameOver, Board, Players) ->
-  case GameOver of
-    true ->
-      game_over(Board);
-    false ->
-      console_io:display_board(Board),
-      console_io:prompt_move(),
-      NewBoard = take_turn(Board, Players),
-      GameStatus = game_rules:game_over(NewBoard),
-      game_loop(GameStatus, NewBoard, Players)
-  end.
-
-play_game() ->
-  Players = configuration:configure_game(),
-  game_loop(false, board:make_board(9), Players).
-
 game_over(Board) ->
   console_io:display(console_io:format_board(Board)),
   case game_rules:winner(Board) of
@@ -39,3 +28,16 @@ game_over(Board) ->
     o -> console_io:o_wins()
   end.
 
+next_move(Board, Players) ->
+  console_io:display_board(Board),
+  console_io:prompt_move(),
+  NewBoard = take_turn(Board, Players),
+  GameStatus = game_rules:game_over(NewBoard),
+  game_loop(GameStatus, NewBoard, Players).
+
+get_player(Players, Turn) ->
+  lists:nth(Turn, Players).
+
+player_type(PlayerTuple) ->
+  {Type,_} = PlayerTuple,
+  Type.
