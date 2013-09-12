@@ -35,11 +35,34 @@ take_turn_test() ->
 game_loop_test() ->
   [{ "decides when game is over",
       meck:new(console_io),
-      meck:expect(console_io, game_over, fun() -> "Game Over" end),
+      meck:expect(console_io, x_wins, fun() -> "Player X Wins" end),
       meck:expect(console_io, display, fun(_) -> "Message 2" end),
       meck:expect(console_io, format_board, fun(_) -> "Formatted" end),
       meck:expect(console_io, display, fun(_) -> "Message 3" end),
       ?assertEqual(
-        "Game Over", runner:game_loop(true, [x], o)),
+        "Player X Wins", runner:game_loop(true, [x,x,x,4,5,6,7,8,9], o)),
+      meck:unload(console_io)
+    }].
+
+game_over_test() ->
+  [{ "outputs correct game over message",
+      meck:new(console_io),
+      meck:expect(console_io, format_board, fun(_) -> "Formatted Board" end),
+      meck:expect(console_io, display, fun(_) -> "Board" end),
+      meck:expect(console_io, x_wins, fun() -> "Player X Wins" end),
+      meck:expect(console_io, display, fun(_) -> "Message 2" end),
+      ?assertEqual(
+        "Player X Wins", runner:game_over([x,x,x,4,5,6,7,8,9])),
+      meck:unload(console_io)
+    },
+    
+    { "outputs correct game over message",
+      meck:new(console_io),
+      meck:expect(console_io, format_board, fun(_) -> "Formatted Board" end),
+      meck:expect(console_io, display, fun(_) -> "Board" end),
+      meck:expect(console_io, o_wins, fun() -> "Player O Wins" end),
+      meck:expect(console_io, display, fun(_) -> "Message 2" end),
+      ?assertEqual(
+        "Player O Wins", runner:game_over([o,o,o,4,5,6,7,8,9])),
       meck:unload(console_io)
     }].

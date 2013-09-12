@@ -19,8 +19,7 @@ take_turn(Board, Players) ->
 game_loop(GameOver, Board, Players) ->
   case GameOver of
     true ->
-      console_io:display(console_io:format_board(Board)),
-      console_io:game_over();
+      game_over(Board);
     false ->
       console_io:display_board(Board),
       console_io:prompt_move(),
@@ -31,4 +30,12 @@ game_loop(GameOver, Board, Players) ->
 
 play_game() ->
   Players = configuration:configure_game(),
-  game_loop(false, [1,2,3,4,5,6,7,8,9], Players).
+  game_loop(false, board:make_board(9), Players).
+
+game_over(Board) ->
+  console_io:display(console_io:format_board(Board)),
+  case game_rules:winner(Board) of
+    x -> console_io:x_wins();
+    o -> console_io:o_wins()
+  end.
+
