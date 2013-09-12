@@ -30,4 +30,5 @@ game_loop(GameOver, Board, Players) ->
   end.
 
 play_game() ->
-  game_loop(false, [1,2,3,4,5,6,7,8,9], [{human, x}, {human, o}]).
+  Players = configuration:configure_game(),
+  game_loop(false, [1,2,3,4,5,6,7,8,9], Players).
