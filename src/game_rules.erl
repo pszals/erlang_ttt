@@ -3,7 +3,6 @@
 
 get_turn(Board) ->
   OpenSquares = open_squares(Board),
-  io:fwrite("called in get_turn"),
   if
     length(OpenSquares) rem 2 =:= 1 -> 1;
     length(OpenSquares) rem 2 =/= 1 -> 2
