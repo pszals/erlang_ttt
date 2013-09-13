@@ -16,7 +16,7 @@ player_type_test() ->
 take_turn_test() ->
   [{ "takes turn if human is to play",
       meck:new(human),
-      meck:expect(human, take_turn, fun(Board, Players) -> turn_taken end),
+      meck:expect(human, take_turn, fun(_,_) -> turn_taken end),
       ?assertEqual(
         turn_taken, runner:take_turn(
           [1,2,3,4,5,6,7,8,9], [{human, x},{computer, o}])),
@@ -25,7 +25,7 @@ take_turn_test() ->
     
     { "takes turn if computer is to play",
       meck:new(computer),
-      meck:expect(computer, take_turn, fun(Board, Players) -> computer_turn_taken end),
+      meck:expect(computer, take_turn, fun(_,_) -> computer_turn_taken end),
       ?assertEqual(
         computer_turn_taken, runner:take_turn(
           [1,2,3,4,5,6,7,8,x], [{human, x},{computer, o}])),

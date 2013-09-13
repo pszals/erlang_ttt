@@ -24,8 +24,9 @@ take_turn(Board, Players) ->
 game_over(Board) ->
   console_io:display(console_io:format_board(Board)),
   case game_rules:winner(Board) of
-    x -> console_io:x_wins();
-    o -> console_io:o_wins()
+    x     -> console_io:x_wins();
+    o     -> console_io:o_wins();
+    false -> console_io:tie_game()
   end.
 
 next_move(Board, Players) ->

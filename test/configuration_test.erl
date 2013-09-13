@@ -22,7 +22,7 @@ configure_game_test() ->
       meck:new(console_io),
       meck:expect(console_io, configure_game, fun() -> "hello" end),
       meck:expect(console_io, input, fun() -> "1" end),
-      meck:expect(console_io, format_input, fun(Input) -> 1 end),
+      meck:expect(console_io, format_input, fun(_) -> 1 end),
       ?assertEqual(
         [{human, x}, {human, o}], configuration:configure_game()),
       meck:unload(console_io)
@@ -32,10 +32,10 @@ configure_game_test() ->
       meck:new(console_io),
       meck:expect(console_io, configure_game, fun() -> "hello" end),
       meck:expect(console_io, input, fun() -> "9" end),
-      meck:expect(console_io, format_input, fun(Input) -> 9 end),
+      meck:expect(console_io, format_input, fun(_) -> 9 end),
       meck:expect(console_io, configure_game, fun() -> "hello" end),
       meck:expect(console_io, input, fun() -> "1" end),
-      meck:expect(console_io, format_input, fun(Input) -> 1 end),
+      meck:expect(console_io, format_input, fun(_) -> 1 end),
       ?assertEqual(
         [{human, x}, {human, o}], configuration:configure_game()),
       meck:unload(console_io)
