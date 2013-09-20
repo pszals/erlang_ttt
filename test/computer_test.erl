@@ -4,17 +4,17 @@
 score_board_test() ->
   [{ "provides a 1 for win, -1 for loss, and 0 for tie",
       ?assertEqual(
-        1, computer:score_board([x,x,x,4,5,6,7,8,9], x, x))
+        1, computer:score_board([x,x,x,4,5,6,7,8,9], x))
     },
     
     { "provides a 1 for win, -1 for loss, and 0 for tie",
       ?assertEqual(
-        -1, computer:score_board([x,x,x,4,5,6,7,8,9], o, o))
+        -1, computer:score_board([x,x,x,4,5,6,7,8,9], o))
     },
     
     { "provides a 1 for win, -1 for loss, and 0 for tie",
       ?assertEqual(
-        0, computer:score_board([x,o,x,x,o,x,o,x,o], o, o))
+        0, computer:score_board([x,o,x,x,o,x,o,x,o], o))
     }].
 
 switch_piece_test() ->
@@ -39,7 +39,7 @@ special_case_test() ->
 
 best_square_test() ->
   [
-    { "correctly implements minimax to make a move",
+    { "wins instead of blocking",
       ?assertEqual(
         4, computer:best_square(
           [
@@ -49,17 +49,7 @@ best_square_test() ->
           ], o))
     },
     
-    { "correctly implements minimax to make a move",
-      ?assertEqual(
-        2, computer:best_square(
-          [
-            x,2,3,
-            4,o,6,
-            7,8,x
-          ], o))
-    },
-    
-    { "correctly implements minimax to make a move",
+    { "completes three in a row immediately",
       ?assertEqual(
         2, computer:best_square(
           [
@@ -69,7 +59,7 @@ best_square_test() ->
           ], o))
     },
     
-    { "correctly implements minimax to make a move",
+    { "completes three in a row",
       ?assertEqual(
         3, computer:best_square(
           [
@@ -79,7 +69,7 @@ best_square_test() ->
           ], x))
     },
     
-    { "correctly implements minimax to make a move",
+    { "blocks a win",
       ?assertEqual(
         3, computer:best_square(
           [
@@ -89,13 +79,53 @@ best_square_test() ->
           ], o))
     },
     
-    { "correctly implements minimax to make a move",
+    { "blocks a win",
       ?assertEqual(
         1, computer:best_square(
           [
             1,x,x,
             x,o,o,
             7,o,x
+          ], o))
+    },
+
+    { "blocks a fork",
+      ?assertEqual(
+        2, computer:best_square(
+          [
+            x,2,3,
+            4,o,6,
+            7,8,x
+          ], o))
+    },
+
+    { "blocks a fork",
+      ?assertEqual(
+        2, computer:best_square(
+          [
+            1,2,x,
+            4,o,6,
+            x,8,9
+          ], o))
+    },
+
+    { "blocks a fork",
+      ?assertEqual(
+        5, computer:best_square(
+          [
+            x,2,3,
+            4,5,6,
+            7,8,9
+          ], o))
+    },
+
+    { "blocks a fork",
+      ?assertEqual(
+        5, computer:best_square(
+          [
+            1,x,3,
+            4,5,6,
+            7,8,9
           ], o))
     }].
 
